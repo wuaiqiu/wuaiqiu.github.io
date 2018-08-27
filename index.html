@@ -56,6 +56,54 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
+    <a href="/www/20180827/threadPool-processPool/" title="线程池与进程池设计" itemprop="url">
+  
+  <h1 itemprop="name">线程池与进程池设计</h1>
+  <time style="text-align:right" datetime="2018-08-27T14:34:23.000Z" itemprop="datePublished">发布于: 2018年08月27日 22:34:23</time>
+    
+     
+      <p itemprop="description" >线程池与进程池在处理高并发充当非常重要的角色,通过一次创建一定数量的线程(进程)而重复使用,大大减小了多次次创建线程(进程)所带来的系统资源开销,然而在线程池与进程池的设计上截然不同。线程池通过任务列队与条件变量抢夺任务(不可控),进程池通过主进程分配任务(可控)。</p>
+      
+    
+  </a>
+</section>
+
+
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/www/20180827/exec-system/" title="exec与system函数区别" itemprop="url">
+  
+  <h1 itemprop="name">exec与system函数区别</h1>
+  <time style="text-align:right" datetime="2018-08-27T14:16:30.000Z" itemprop="datePublished">发布于: 2018年08月27日 22:16:30</time>
+    
+     
+      <p itemprop="description" >当C/C++需要调用外界脚本,可以使用exec系列函数与system函数,但两者又有许多不同地方,本文解析两类函数的区别与联系。</p>
+      
+    
+  </a>
+</section>
+
+
+
+  <section class="post" itemscope itemprop="blogPost">
+  
+    <a href="/www/20180827/pthread/" title="pthread作为类成员的注意事项" itemprop="url">
+  
+  <h1 itemprop="name">pthread作为类成员的注意事项</h1>
+  <time style="text-align:right" datetime="2018-08-27T14:02:05.000Z" itemprop="datePublished">发布于: 2018年08月27日 22:02:05</time>
+    
+     
+      <p itemprop="description" >在C++的类中,普通成员函数不能作为pthread_create的线程函数。如果要作为pthread_create中的线程函数,必须是static。在C语言中,我们使用pthread_create创建线程,线程函数是一个全局函数。所以在C++中,创建线程时也应该使用一个全局函数。static定义的类的成员函数就是一个全局函数。</p>
+      
+    
+  </a>
+</section>
+
+
+
+  <section class="post" itemscope itemprop="blogPost">
+  
     <a href="/www/20180814/traits/" title="traits" itemprop="url">
   
   <h1 itemprop="name">traits</h1>
@@ -97,7 +145,7 @@
 	<p class="asidetitle">分类</p>
 		<ul>
 		
-			<li><a href="/categories/cpp/" title="cpp">cpp<sup>1</sup></a></li>
+			<li><a href="/categories/cpp/" title="cpp">cpp<sup>4</sup></a></li>
 		
 		</ul>
 </div>
@@ -108,7 +156,11 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/cpp/" title="cpp">cpp<sup>1</sup></a></li>
+			<li><a href="/tags/cpp/" title="cpp">cpp<sup>4</sup></a></li>
+		
+			<li><a href="/tags/process/" title="process">process<sup>2</sup></a></li>
+		
+			<li><a href="/tags/pthread/" title="pthread">pthread<sup>2</sup></a></li>
 		
 			<li><a href="/tags/stl/" title="stl">stl<sup>1</sup></a></li>
 		
