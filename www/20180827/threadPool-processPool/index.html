@@ -43,6 +43,8 @@
 					
 						<li><a href="/categories/cpp">C++</a></li>
 					
+						<li><a href="/categories/js">JavaScript</a></li>
+					
 						<li><a href="/archives">时间轴</a></li>
 					
 				</ul>
@@ -71,10 +73,10 @@
 		</div>
 		
 		<p>1.线程池设计原理:线程池通过一个任务列队,将任务分配者与任务执行者逻辑分别独立,避免任务分配者与执行者同步阻塞执行。其中任务执行者为线程池中的线程,它们通过条件变量的互斥控制在任务列队中抢夺任务。</p>
-<p><img src="/img/2018082703.png" alt=""></p>
+<p><img src="/img/2018082704.png" alt=""></p>
 <p><a href="https://github.com/wuaiqiu/PHP/blob/master/cpp/Process/ThreadPool.c" target="_blank" rel="noopener">线程池实现源码</a></p>
 <p>2.进程池设计原理:进程池的控制完全由主进程控制,主进程接受到任务后,可以通过一系列的分配算法决定该任务分配给某个空闲的子进程,而子进程无权去抢夺任务。这里需要解决的是主进程与子进程之间的通信问题。</p>
-<p><img src="/img/2018082704.png" alt=""></p>
+<p><img src="/img/2018082703.png" alt=""></p>
 <p><a href="https://github.com/wuaiqiu/PHP/blob/master/cpp/Process/ProcessPool.c" target="_blank" rel="noopener">进程池实现源码</a></p>
 <blockquote>
 <p>注:对此文章若有问题请往<a href="https://github.com/wuaiqiu/wuaiqiu.github.io/issues" target="_blank" rel="noopener">issue</a>留言(ps:注明title为pool)</p>
@@ -99,6 +101,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/www/20180829/iterator/" title="Iterator In ES6">
+  <strong>前一篇:</strong><br/>
+  <span>
+  Iterator In ES6</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/www/20180827/exec-system/"  title="exec与system函数区别">
@@ -143,6 +153,8 @@
 		
 			<li><a href="/categories/cpp/" title="cpp">cpp<sup>4</sup></a></li>
 		
+			<li><a href="/categories/js/" title="js">js<sup>1</sup></a></li>
+		
 		</ul>
 </div>
 
@@ -152,7 +164,11 @@
 	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
+			<li><a href="/tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+		
 			<li><a href="/tags/cpp/" title="cpp">cpp<sup>4</sup></a></li>
+		
+			<li><a href="/tags/js/" title="js">js<sup>1</sup></a></li>
 		
 			<li><a href="/tags/process/" title="process">process<sup>2</sup></a></li>
 		
