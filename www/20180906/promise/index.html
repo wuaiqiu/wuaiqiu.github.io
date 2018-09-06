@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>exec与system函数区别 | PHPer</title>
+    <title>promise | PHPer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="wuaiqiu">
     
-    <meta name="description" itemprop="description" content="当C/C++需要调用外界脚本,可以使用exec系列函数与system函数,但两者又有许多不同地方,本文解析两类函数的区别与联系。">
+    <meta name="description" itemprop="description" content="ES6新增的Promise对象解决了异步回调函数层层嵌套的问题">
     
     
     
@@ -58,10 +58,10 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/www/20180827/exec-system/" title="exec与system函数区别" itemprop="url">exec与system函数区别</a>
+      <a href="/www/20180906/promise/" title="promise" itemprop="url">promise</a>
   </h1>
   <p class="article-time">
-    <time datetime="2018-08-27T14:16:30.000Z" itemprop="datePublished">2018年08月27日 22:16:30</time>
+    <time datetime="2018-09-06T04:46:25.000Z" itemprop="datePublished">2018年09月06日 12:46:25</time>
   </p>
 </header>
 	<div class="article-content">
@@ -72,16 +72,12 @@
 		
 		</div>
 		
-		<p>1.exec:调用exec不会创建新进程,所以前后的进程ID并未改变;exec只是用新程序替换了当前进程的正文、数据、堆和栈段。执行完成后不会回到主调程序中。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> status;</span><br><span class="line">    <span class="keyword">pid_t</span> pid=fork();</span><br><span class="line">    <span class="keyword">if</span>(pid==<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//子进程</span></span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"Child is Starting...\n"</span>);</span><br><span class="line">    	execl(<span class="string">"/bin/ls"</span>,<span class="string">"ls"</span>,<span class="string">"/"</span>,<span class="literal">nullptr</span>);</span><br><span class="line">    	<span class="comment">//后面逻辑不会执行</span></span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"Child is Stoping...\n"</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="comment">//父进程</span></span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"Parent is Starting...\n"</span>);</span><br><span class="line">    	wait(&amp;status);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Parent is Stoping...\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/img/2018082701.png" alt=""></p>
-<p>2.system:调用system则会创建一个新进程执行新程序代码。执行完成后会回到主调程序中。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Process is Staring...\n"</span>);</span><br><span class="line">    <span class="comment">//fork一个进程执行</span></span><br><span class="line">    system(<span class="string">"ping www.baidu.com"</span>);</span><br><span class="line">    <span class="comment">//后面逻辑会执行</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Process is Stop...\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>运行结果:</p>
-<p><img src="/img/2018082702.png" alt=""></p>
+		<p>1.传统异步多层回调,回调函数作为参数层层传递</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun1</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun1:'</span>,<span class="string">'arg1'</span>);</span><br><span class="line">    a(<span class="string">'arg1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun2</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">    a+=<span class="string">' arg2'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun2:'</span>,a);</span><br><span class="line">    b(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun3</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    a+=<span class="string">' arg3'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun3:'</span>,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fun1(<span class="function"><span class="keyword">function</span> (<span class="params">arg</span>) </span>&#123;</span><br><span class="line">    fun2(arg,<span class="function"><span class="keyword">function</span>(<span class="params">arg</span>) </span>&#123;</span><br><span class="line">        fun3(arg);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>2.Promise写法,需要处理的数据层层传输</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun1</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun1:'</span>,<span class="string">'arg1'</span>);</span><br><span class="line">    a(<span class="string">'arg1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun2</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    a+=<span class="string">' arg2'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun2:'</span>,a);</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fun3</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    a+=<span class="string">' arg3'</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'This is Fun3:'</span>,a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(fun1).then(fun2).then(fun3);</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>注:对此文章若有问题请往<a href="https://github.com/wuaiqiu/wuaiqiu.github.io/issues" target="_blank" rel="noopener">issue</a>留言(ps:注明title为exec)</p>
+<p>注:对此文章若有问题请往<a href="https://github.com/wuaiqiu/wuaiqiu.github.io/issues" target="_blank" rel="noopener">issue</a>留言(ps:注明title为promise)</p>
 </blockquote>
   
 	</div>
@@ -89,13 +85,13 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/cpp/">cpp</a><a href="/tags/process/">process</a>
+  <span></span> <a href="/tags/ES6/">ES6</a><a href="/tags/js/">js</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/cpp/">cpp</a>
+  <a class="article-category-link" href="/categories/js/">js</a>
 </div>
 
 </footer>   	       
@@ -103,19 +99,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/www/20180827/threadPool-processPool/" title="线程池与进程池设计">
-  <strong>前一篇:</strong><br/>
-  <span>
-  线程池与进程池设计</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/www/20180827/pthread/"  title="pthread作为类成员的注意事项">
+<a href="/www/20180829/iterator/"  title="Iterator In ES6">
  <strong>下一篇:</strong><br/>
- <span>pthread作为类成员的注意事项
+ <span>Iterator In ES6
 </span>
 </a>
 </div>
